@@ -24,8 +24,8 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    let url = new URL(`${this.url}`);
+    return url.host;
   }
 }
 
@@ -60,6 +60,7 @@ class StoryList {
     });
 
     // turn plain old story objects from API into instances of Story class
+    console.log('THIS IS THE STORY LIST FROM API: ', response.data);
     const stories = response.data.stories.map(story => new Story(story));
 
     // build an instance of our own class using the new array of stories
@@ -73,8 +74,18 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  async addStory(user, newStory) {
+    let story = new Story({storyId: Math.floor(Math.random()*1000000), title: newStory.title, author: newStory.author, url: newStory.url, username: user.username, createdAt: user.createdAt})
+    
+    // add story to API and storylist somehow
+    // const response = await axios({
+    //   url: `${BASE_URL}/stories`,
+    //   method: "POST",
+    //   data: { stories: story },
+    //   token: user.loginToken
+    // });
+
+    return story;
   }
 }
 
@@ -124,6 +135,7 @@ class User {
     });
 
     let { user } = response.data
+    // console.log('TOKEN SHOULD BE IN HERE SOMEWHERE', response.data)
 
     return new User(
       {
@@ -175,6 +187,7 @@ class User {
         method: "GET",
         params: { token },
       });
+      console.log(response.data);
 
       let { user } = response.data;
 

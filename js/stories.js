@@ -50,3 +50,19 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+/** Handle new story form submission. */
+
+async function newStory(evt) {
+  console.debug("new story", evt);
+  evt.preventDefault();
+
+  // grab the new story info and make new Story instance
+  let newStoryInput = await storyList.addStory(currentUser, {title: $('#story-title').val(), author: $('#story-author').val(), url: $('#story-url').val()});
+  console.log('newstory instance', newStoryInput);
+  // console.log(`${newStoryInput instanceof Story}`);
+  // $allStoriesList.append(generateStoryMarkup(newStoryInput));
+
+}
+
+$newStoryForm.on("submit", newStory);

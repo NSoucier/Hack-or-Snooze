@@ -9,7 +9,7 @@
      - Michael Hueter: initial creation, 2018
      - Elie Schoppik: refactoring using OO, 2019
      - Joel Burton: refactored and componentized, 2020
-     - You!
+     - Nathan Soucier: added new features,  2024
   -->
 
 <html lang="en">
@@ -38,6 +38,7 @@
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
   </div>
   <div class="nav-right">
+    <a class="nav-link" href="#" id="nav-submit">Submit</a>
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
     <a class="nav-link" href="#" id="nav-user-profile"></a>
     <a class="hidden" id="nav-logout" href="#"><small>(logout)</small></a>
@@ -52,6 +53,28 @@
 
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
+
+</section>
+
+<!-- Submit form -->
+<section class="new-story-forms-container container">
+
+  <form action="#" id="submit-form" class="new-story-form hidden" method="post">
+    <h4>Add new story:</h4>
+    <div class="new-story-title">
+      <label for="title">Title</label>
+      <input type="text" id="story-title" placeholder="Title">
+    </div>
+    <div class="new-story-author">
+      <label for="author">Author</label>
+      <input type="text" id="story-author" placeholder="Author">
+    </div>
+    <div class="new-story-url">
+      <label for="url">URL</label>
+      <input type="text" id="story-url" placeholder="URL">
+    </div>
+    <button type="submit">submit</button>
+  </form>
 
 </section>
 
