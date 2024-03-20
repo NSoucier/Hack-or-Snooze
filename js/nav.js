@@ -7,9 +7,9 @@
 /** Show main list of all stories when click site name */
 
 function navAllStories(evt) {
-  console.debug("navAllStories", evt);
+  console.debug("logo navAllStories", evt);
   hidePageComponents();
-  putStoriesOnPage();
+  getAndShowStoriesOnStart();
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -39,8 +39,13 @@ function updateNavOnLogin() {
 
 function navSubmitClick(evt) {
   console.debug("navSubmitClick", evt);
-  hidePageComponents();
-  $newStoryForm.show();
+  if(!currentUser) {
+    alert('Please login first.')
+  } else {
+    hidePageComponents();
+    $newStoryForm.show();
+  }
+
 }
 
 $navSubmit.on('click', navSubmitClick);

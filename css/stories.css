@@ -22,18 +22,44 @@
 .story-link {
   color: black;
   font-size: 0.85rem;
-  font-weight: normal;
+  font-weight: 700;
   margin: 18px 0;
 }
 
 .story-link:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .story-author {
-  margin-left: 2em;
+  display: block;
+  margin: 5px 0;
+  color: rgb(0, 169, 0);
+  font-size: 0.75rem;
 }
 
 .story-user {
   display: block;
+  color: orange;
+  font-size: 0.75rem;
+}
+
+.star {
+  margin-bottom: 10px;
+  visibility: hidden;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.star:before {
+ content: "\2606";
+ visibility: visible;
+}
+
+.star:checked:before {
+ content: "\2605";
+}
+
+.trash {
+  padding-top: 10px;
+  padding-left: 5px;
 }

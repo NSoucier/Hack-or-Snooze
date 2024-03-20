@@ -10,6 +10,7 @@ const $allStoriesList = $("#all-stories-list");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 const $newStoryForm = $('#submit-form');
+const $myfavs = $('#nav-favorites');
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");

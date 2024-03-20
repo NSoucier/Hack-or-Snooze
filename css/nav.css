@@ -4,12 +4,14 @@ nav {
   display: flex;
   background-color: #ff6600;
   align-items: center;
-  padding: 5px 20px;
+  padding: 15px 20px;
   border-radius: 3px 3px 0 0;
 }
 
 .navbar-brand {
   font-weight: bold;
+  font-size: 18px;
+  padding-right: 10px;;
 }
 
 .nav-link {
@@ -20,4 +22,8 @@ nav {
 .nav-right {
   margin-left: auto;
   text-align: right;
+}
+
+.nav-left {
+  text-align: left;
 }

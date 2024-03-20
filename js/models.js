@@ -75,18 +75,35 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
-    let story = new Story({storyId: Math.floor(Math.random()*1000000), title: newStory.title, author: newStory.author, url: newStory.url, username: user.username, createdAt: user.createdAt})
-    
+    let story = new Story({storyId: Math.floor(Math.random()*100000000), title: newStory.title, author: newStory.author, url: newStory.url, username: user.username, createdAt: user.createdAt})
+    console.log(user.loginToken);
     // add story to API and storylist somehow
-    // const response = await axios({
-    //   url: `${BASE_URL}/stories`,
-    //   method: "POST",
-    //   data: { stories: story },
-    //   token: user.loginToken
-    // });
+    const response = await axios({
+      url: `${BASE_URL}/stories`,
+      method: "POST",
+      data: {token: `${user.loginToken}`, story: {"author": story.author, "title": story.title, "url" : story.url} }
+      //data: { token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4IiwiaWF0IjoxNzEwODU4MTU3fQ.k10wls4ElSWEQzS4CyXx4wJpcpI1ompqo9bAvFBTOOs", story: {"author":"nat nat","title":"Four Tips for Moving Faster as a Developer", "url": "https://www.rithmschool.com/blog/developer-productivity"} }
+    });
 
+    // const responselist = await axios({
+    //   url: `${BASE_URL}/stories`,
+    //   method: "GET",
+    // });
+    // console.log('THIS IS THE updated STORY LIST FROM API: ', responselist.data);
     return story;
   }
+
+  // remove story completely
+  async deleteStory(user, storyId) {
+    console.log('trying to delete')
+    await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: "DELETE",
+      data: { token: user.loginToken }
+    });
+    console.log('deleted');
+  }
+
 }
 
 
@@ -206,4 +223,28 @@ class User {
       return null;
     }
   }
+
+  // add story to favorites. Accepts user and storyId as arguments
+  static async addToFavorites(user, storyId) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${user.username}/favorites/${storyId}`,
+      method: "POST",
+      data: { token: `${user.loginToken}` },
+    });
+    console.log(response.data);
+  }
+
+  // remove story from favorites. Accepts user and storyId as arguments
+  static async deleteFromFavorites(user, storyId) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${user.username}/favorites/${storyId}`,
+      method: "DELETE",
+      data: { token: `${user.loginToken}` },
+    });
+    console.log(response.data);
+  }
+
 }
+
+
+

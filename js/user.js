@@ -1,7 +1,8 @@
 "use strict";
 
-// global to hold the User instance of the currently-logged-in user
+// global to hold the User instance of the currently-logged-in user and their favs
 let currentUser;
+let userFavs
 
 /******************************************************************************
  * User login/signup/login
@@ -20,6 +21,7 @@ async function login(evt) {
   // User.login retrieves user info from API and returns User instance
   // which we'll make the globally-available, logged-in user.
   currentUser = await User.login(username, password);
+  userFavs = currentUser.favorites;
 
   $loginForm.trigger("reset");
 
@@ -109,6 +111,8 @@ function saveUserCredentialsInLocalStorage() {
 
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
+  hidePageComponents();
+  getAndShowStoriesOnStart();
 
   $allStoriesList.show();
 
