@@ -31,6 +31,9 @@ a:hover {
   text-decoration: underline;
 }
 
+hr {
+  border: 1px solid #e5e5e5;
+}
 
 /* Site layout */
 
