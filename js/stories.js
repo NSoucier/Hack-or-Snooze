@@ -23,8 +23,8 @@ function generateStoryMarkup(story) {
   console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
-  if (currentUser && currentUser.favorites.some(val => val.storyId === story.storyId)) { // returns true is it's previously favorited
-    return $(`
+  const isLoggedIn = Boolean(currentUser)
+  return $(`
     <li id="${story.storyId}">
       <hr>
       <a href="${story.url}" target="a_blank" class="story-link">
@@ -33,22 +33,15 @@ function generateStoryMarkup(story) {
       <small class="story-hostname">(${hostName})</small>
       <small class="story-author">by ${story.author}</small>
       <small class="story-user">posted by ${story.username}</small>
-      <i class="fa-star fa-solid"></i>
+      ${isLoggedIn ? createStar(currentUser, story) : ''}
     </li>`);
+}
 
-  }
-  else { // not favorited
-    return $(`
-      <li id="${story.storyId}">
-        <hr>
-        <a href="${story.url}" target="a_blank" class="story-link">
-          ${story.title}
-        </a>
-        <small class="story-hostname">(${hostName})</small>
-        <small class="story-author">by ${story.author}</small>
-        <small class="story-user">posted by ${story.username}</small>
-        <i class="fa-regular fa-star"></i>
-      </li>`);
+function createStar(currentUser, story) {
+  if (currentUser && currentUser.favorites.some(val => val.storyId === story.storyId)) { // returns true is it's previously favorited
+    return '<i class="fa-star fa-solid"></i>'
+  } else {
+    return '<i class="fa-star fa-regular"></i>'
   }
 }
 
@@ -74,7 +67,7 @@ function putStoriesOnPage() {
 
 
   $allStoriesList.show();
-  
+
   // listen for use of trash can
   let $trash = $('.trash');
   $trash.on('click', removeStory);
@@ -94,12 +87,12 @@ async function newStory(evt) {
     alert('Please login before adding a new story.')
   }
   // grab the new story info and make new Story instance
-  let newStoryInput = await storyList.addStory(currentUser, {title: $('#story-title').val(), author: $('#story-author').val(), url: $('#story-url').val()});
+  let newStoryInput = await storyList.addStory(currentUser, { title: $('#story-title').val(), author: $('#story-author').val(), url: $('#story-url').val() });
 
   hidePageComponents();
-  
+
   getAndShowStoriesOnStart();
-  
+
 }
 
 $newStoryForm.on("submit", newStory);
@@ -117,9 +110,9 @@ async function toggleFavs(evt) {
     evt.target.classList.toggle('fa-solid'); // class of favorite
     evt.target.classList.toggle('fa-regular'); // class of non-favorite
     let storyID = evt.target.parentElement.id;
-    if (evt.target.classList.value.indexOf('fa-solid') !== -1 ) { // add to favorites
+    if (evt.target.classList.value.indexOf('fa-solid') !== -1) { // add to favorites
       let user = await User.addToFavorites(currentUser, storyID);
-      currentUser.favorites.push({storyId: storyID});
+      currentUser.favorites.push({ storyId: storyID });
     } else { // removes from favorites
       let user = await User.deleteFromFavorites(currentUser, storyID);
       currentUser.favorites = currentUser.favorites.filter(st => st.storyId !== storyID);
@@ -131,7 +124,7 @@ async function toggleFavs(evt) {
 }
 
 // display page of favs when the nav button is clicked
-function displayFavs () {
+function displayFavs() {
   if (!currentUser) {
     alert('Please login first.')
   } else {

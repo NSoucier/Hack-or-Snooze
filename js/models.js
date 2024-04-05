@@ -2,6 +2,8 @@
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
+// 3 classes: Story, StoryList and User
+
 /******************************************************************************
  * Story: a single story in the system
  */
@@ -24,8 +26,8 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    let url = new URL(`${this.url}`);
-    return url.host;
+    let url = new URL(this.url);
+    return url.hostname;
   }
 }
 
